@@ -1,0 +1,78 @@
+C51 COMPILER V9.60.7.0   KEY                                                               12/28/2025 15:36:46 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.l
+                    -st) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include <STC89C5xRC.H>
+   2          #include "main.h"
+   3          
+   4          sbit S1 = P1^0;
+   5          sbit S2 = P1^1;
+   6          sbit S3 = P1^2;
+   7          sbit S4 = P1^3;
+   8          sbit S5 = P1^4;
+   9          sbit S6 = P1^5;
+  10          sbit S7 = P1^6;
+  11          sbit S8 = P1^7;
+  12          
+  13          sbit START = P0^0;
+  14          sbit RESET = P0^1;
+  15          sbit SET = P0^2;
+  16          sbit INC = P0^3;
+  17          sbit DEC = P0^4;
+  18          sbit SEL = P0^5;
+  19          
+  20          unsigned char GetKey(void)
+  21          {
+  22   1              unsigned char KeyNum = 0;
+  23   1              
+  24   1          // ### 1 主界面，等待开始
+  25   1              if(MODE == 1){
+  26   2                      if(START == 0){Delay_ms(10);if(START == 0){MODE = 2;while(START == 0);}}
+  27   2                      if(SET == 0){Delay_ms(10);if(SET == 0){MODE = 4;while(SET == 0);}}
+  28   2              }
+  29   1          // ### 2 倒计时阶段：等待选手按键
+  30   1              else if(MODE == 2){
+  31   2                      if(S1 == 0){Delay_ms(10);if(S1 == 0){KeyNum = 1;MODE = 3;while(S1 == 0);}}
+  32   2                      if(S2 == 0){Delay_ms(10);if(S2 == 0){KeyNum = 2;MODE = 3;while(S2 == 0);}}
+  33   2                      if(S3 == 0){Delay_ms(10);if(S3 == 0){KeyNum = 3;MODE = 3;while(S3 == 0);}}
+  34   2                      if(S4 == 0){Delay_ms(10);if(S4 == 0){KeyNum = 4;MODE = 3;while(S4 == 0);}}
+  35   2                      if(S5 == 0){Delay_ms(10);if(S5 == 0){KeyNum = 5;MODE = 3;while(S5 == 0);}}
+  36   2                      if(S6 == 0){Delay_ms(10);if(S6 == 0){KeyNum = 6;MODE = 3;while(S6 == 0);}}
+  37   2                      if(S7 == 0){Delay_ms(10);if(S7 == 0){KeyNum = 7;MODE = 3;while(S7 == 0);}}
+  38   2                      if(S8 == 0){Delay_ms(10);if(S8 == 0){KeyNum = 8;MODE = 3;while(S8 == 0);}}
+  39   2              }
+  40   1          // ### 3 锁定阶段 或 5 倒计时结束阶段
+  41   1              else if(MODE == 3 || MODE == 5){
+  42   2                      if(RESET == 0){Delay_ms(10);if(RESET == 0){MODE = 1;while(RESET == 0);}}
+  43   2              }
+  44   1          // ### 4 设置阶段
+  45   1              else if(MODE == 4){
+  46   2                      if(INC == 0){Delay_ms(10);if(INC == 0){time_SET++;while(INC == 0);}}
+  47   2                      if(DEC == 0){Delay_ms(10);if(DEC == 0){time_SET--;while(DEC == 0);}}
+  48   2                      if(SET == 0){Delay_ms(10);if(SET == 0){MODE = 1;time_number = time_SET;while(SET == 0);}}
+  49   2              }
+  50   1      
+  51   1              return KeyNum;
+  52   1      }
+
+
+C51 COMPILER V9.60.7.0   KEY                                                               12/28/2025 15:36:46 PAGE 2   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    341    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

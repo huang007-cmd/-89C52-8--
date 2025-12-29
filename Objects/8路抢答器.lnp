@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\key.obj",
+".\Objects\lcd1602.obj",
+".\Objects\Delay.obj" 
+TO ".\Objects\8Â·ÇÀ´ðÆ÷" 
+PRINT(".\Listings\8Â·ÇÀ´ðÆ÷.m51") RAMSIZE(256) 
